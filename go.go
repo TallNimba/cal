@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"os"
 	"strconv"
@@ -17,6 +18,7 @@ func main() {
 	var isRomanNum1 bool = false
 	var isRomanNum2 bool = false
 	var rimResult string
+	var error1 = errors.New("Возникла ошибка:")
 
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Println("Введите математическое выражение")
@@ -25,7 +27,7 @@ func main() {
 	components := strings.Split(equation, " ")
 
 	if len(components) != 3 {
-		fmt.Println("Ошибка: неправильный формат уравнения!")
+		fmt.Println(error1, "неправильный формат уравнения!")
 		return
 	}
 
@@ -39,7 +41,7 @@ func main() {
 	if err1 != nil {
 		operand1Int = rimNum[operand1]
 		if operand1Int == 0 {
-			fmt.Println("Необходимо вводить только римские или арабские числа")
+			fmt.Println(error1, "необходимо вводить только римские или арабские числа")
 			return
 		} else {
 			isRomanNum1 = true
@@ -49,7 +51,7 @@ func main() {
 	if err2 != nil {
 		operand2Int = rimNum[operand2]
 		if operand2Int == 0 {
-			fmt.Println("Необходимо вводить только римские или арабские числа")
+			fmt.Println(error1, "необходимо вводить только римские или арабские числа")
 			return
 		} else {
 			isRomanNum2 = true
@@ -57,7 +59,7 @@ func main() {
 	}
 
 	if operand1Int < 1 || operand1Int > 10 || operand2Int < 1 || operand2Int > 10 {
-		fmt.Println("Ошибка: вводимые операнды не могут быть меньше 1 и больше 10!")
+		fmt.Println(error1, "вводимые операнды не могут быть меньше 1 и больше 10!")
 		return
 	}
 
@@ -74,7 +76,7 @@ func main() {
 		result = operand1Int / operand2Int
 
 	default:
-		fmt.Println("Ошибка: неверный оператор!")
+		fmt.Println(error1, "неверный оператор!")
 		return
 	}
 
@@ -88,10 +90,10 @@ func main() {
 				}
 			}
 		} else {
-			fmt.Println("Римские цифры не могут быть равны или меньше 0")
+			fmt.Println(error1, "римские цифры не могут быть равны или меньше 0")
 		}
 	} else if (isRomanNum1 == true && isRomanNum2 == false) || (isRomanNum1 == false && isRomanNum2 == true) {
-		fmt.Println("Либо только римские либо арабские")
+		fmt.Println(error1, "либо только римские либо только арабские")
 	} else {
 		fmt.Println("Результат: ", result)
 	}
